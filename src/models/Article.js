@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
-const { sequelizeRaw } = require("../config/db");
+const { sequelize } = require("../config/db");
 const slugify = require("slugify");
 
-const Article = sequelizeRaw.define(
+const Article = sequelize.define(
   "Article",
   {
     id: {
@@ -32,15 +32,10 @@ const Article = sequelizeRaw.define(
       type: DataTypes.BLOB("long"),
       allowNull: true,
     },
-    created_at: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
-    },
     public: {
       type: DataTypes.ENUM("public", "private", "draft"),
       allowNull: false,
-      defaultValue: true,
+      defaultValue: "private",
     },
   },
   {
