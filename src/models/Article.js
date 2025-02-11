@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/db");
+const Tag = require("./Tag");
 const slugify = require("slugify");
 
 const Article = sequelize.define(
@@ -20,8 +21,12 @@ const Article = sequelize.define(
       allowNull: false,
       unique: true,
     },
-    discretion: {
-      type: DataTypes.MEDIUMINT,
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    content: {
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     image: {
@@ -30,6 +35,16 @@ const Article = sequelize.define(
     },
     video: {
       type: DataTypes.BLOB("long"),
+      allowNull: true,
+    },
+    views: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+      allowNull: true,
+    },
+    likes: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
       allowNull: true,
     },
     public: {
@@ -51,5 +66,8 @@ Article.beforeValidate((arctic) => {
     });
   }
 });
+
+Article.belongsToMany(Tag, { through: "ArticleTag" });
+Tag.belongsToMany(Article, { through: "ArticleTag" });
 
 module.exports = Article;
