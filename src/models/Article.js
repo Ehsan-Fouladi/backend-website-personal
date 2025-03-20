@@ -1,4 +1,3 @@
-const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/db");
 const Tag = require("./Tag");
 const slugify = require("slugify");
